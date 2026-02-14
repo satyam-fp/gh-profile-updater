@@ -1,13 +1,8 @@
 {
   "name": "gh-profile-updater",
-  "version": "1.0.0",
-  "author": "Satyam",
   "description": "Automatically generates impact-driven summaries from your git activity and updates your GitHub profile README.",
-  "skills": [
-    {
-      "name": "update-profile",
-      "path": "skills/update-profile/SKILL.md",
-      "description": "Scans recent commits and conversation context to produce a categorized, high-impact summary and patches your GitHub profile README."
-    }
-  ]
+  "author": {
+    "name": "Satyam",
+    "email": "satyam@users.noreply.github.com"
+  }
 }

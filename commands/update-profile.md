@@ -1,26 +1,21 @@
-# update-profile
-
-Automatically generate an impact-driven summary of recent work and update your GitHub profile README.
-
+---
+allowed-tools: Bash(git log:*), Bash(git remote:*), Bash(git branch:*), Read, Edit, Write, Glob, Grep
+description: Generate an impact-driven summary from git activity and update your GitHub profile README
 ---
 
-## Trigger
+## Context
 
-The user invokes this skill by running:
-
-```
-/update-profile
-```
-
----
+- Recent commits: !`git log --oneline -5`
+- Current repo remote: !`git remote get-url origin`
+- Current branch: !`git branch --show-current`
 
 ## Instructions
 
-When this skill is invoked, follow these steps **exactly**:
+Follow these steps **exactly**:
 
 ### Step 1 — Gather Data
 
-1. **Git commits**: Run `git log --oneline -5` in the current working directory to retrieve the last 5 commits. Parse each commit message for what was accomplished.
+1. **Git commits**: Review the recent commits provided above. Parse each commit message for what was accomplished.
 2. **Session context**: Review the current conversation history for any tasks completed, bugs fixed, features built, or concepts explored during this session.
 
 ### Step 2 — Classify Progress
@@ -53,11 +48,10 @@ Compose the summary following these rules:
 
 ### Step 4 — Locate the Profile README
 
-1. Determine the user's GitHub username. Check, in order:
-   - The git remote of the **current repo** (`git remote get-url origin` → extract the owner).
-   - Ask the user if it cannot be inferred.
-2. Look for a local directory at the **same level as the current repo** named after that username (this is the conventional GitHub profile repo, e.g., `../satyam-fp/`).
+1. Determine the user's GitHub username by extracting the owner from the repo remote URL above.
+2. Look for a local directory at the **same level as the current repo** named after that username (the conventional GitHub profile repo, e.g., `../satyam-fp/`).
 3. Inside that directory, open `README.md`.
+4. If the profile repo directory doesn't exist, ask the user for the path to their profile README.
 
 ### Step 5 — Patch the README
 
@@ -72,7 +66,7 @@ Compose the summary following these rules:
 
    ```markdown
 
-   ## :hammer_and_wrench: Recent Velocity
+   ## 🛠️ Recent Velocity
 
    <!-- RECENT-VELOCITY:START -->
    {summary from Step 3}
@@ -90,8 +84,6 @@ Profile README updated with your latest velocity snapshot.
 Categories: {list categories that had entries}
 File: {absolute path to the README that was modified}
 ```
-
----
 
 ## Constraints
 
