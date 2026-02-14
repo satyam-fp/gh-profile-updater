@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(git log:*), Bash(git remote:*), Bash(git branch:*), Read, Edit, Write, Glob, Grep
+allowed-tools: Bash(git log:*), Bash(git remote:*), Bash(git branch:*), Bash(git clone:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(rm -rf /tmp/gh-profile-*), Bash(mktemp:*), Bash(ls:*), Read, Edit, Write, Glob, Grep
 description: Generate an impact-driven summary from git activity and update your GitHub profile README
 ---
 
@@ -50,8 +50,14 @@ Compose the summary following these rules:
 
 1. Determine the user's GitHub username by extracting the owner from the repo remote URL above.
 2. Look for a local directory at the **same level as the current repo** named after that username (the conventional GitHub profile repo, e.g., `../satyam-fp/`).
-3. Inside that directory, open `README.md`.
-4. If the profile repo directory doesn't exist, ask the user for the path to their profile README.
+3. If a local clone exists, use it directly — open `README.md` inside it.
+4. **If no local clone exists**, automatically clone the profile repo to a temp directory:
+   ```
+   TMPDIR=$(mktemp -d /tmp/gh-profile-XXXXXX)
+   git clone https://github.com/{username}/{username}.git "$TMPDIR"
+   ```
+   Then open `$TMPDIR/README.md`.
+5. If the profile repo doesn't exist on GitHub at all, ask the user for the path or URL to their profile README.
 
 ### Step 5 — Patch the README
 
@@ -75,7 +81,19 @@ Compose the summary following these rules:
 
 4. Write the file back to disk using the Edit or Write tool.
 
-### Step 6 — Report Back
+### Step 6 — Commit and Push
+
+If the README was cloned to a temp directory (i.e., no pre-existing local repo was used):
+
+1. `cd` into the temp directory.
+2. Stage the change: `git add README.md`
+3. Commit: `git commit -m "Update recent velocity snapshot"`
+4. Push: `git push origin main`
+5. Clean up: `rm -rf $TMPDIR`
+
+If a local repo was used, only write the file — do NOT commit or push automatically. Inform the user that the file has been updated locally and they can commit/push when ready.
+
+### Step 7 — Report Back
 
 Print a short confirmation to the user:
 
@@ -83,6 +101,7 @@ Print a short confirmation to the user:
 Profile README updated with your latest velocity snapshot.
 Categories: {list categories that had entries}
 File: {absolute path to the README that was modified}
+Pushed to remote: yes/no
 ```
 
 ## Constraints
