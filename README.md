@@ -20,6 +20,14 @@ The output focuses on **impact**, not activity — *"Cut API latency by 40%"* in
 
 ---
 
+## Requirements
+
+- Claude Code CLI
+- [GitHub CLI (`gh`)](https://cli.github.com/) — install via `brew install gh` (macOS), `winget install GitHub.cli` (Windows), or [see all options](https://github.com/cli/cli#installation). Then authenticate with `gh auth login`.
+- A GitHub profile repo (`<your-username>/<your-username>`) with a `README.md`
+
+---
+
 ## Installation
 
 ### 1. Add the marketplace
@@ -136,14 +144,6 @@ No configuration needed. The plugin infers your GitHub username from the current
 - **Review gate**: You always see the draft summary before any changes are pushed.
 - **Pull request workflow**: Changes are pushed to a new branch and a PR is opened — never pushed directly to main.
 - **Archival**: Previous velocity snapshots are preserved in a Past Projects section with month/year headers.
-
----
-
-## Requirements
-
-- Claude Code CLI
-- [GitHub CLI (`gh`)](https://cli.github.com/) — install via `brew install gh` (macOS), `winget install GitHub.cli` (Windows), or [see all options](https://github.com/cli/cli#installation). Then authenticate with `gh auth login`.
-- A GitHub profile repo (`<your-username>/<your-username>`) with a `README.md`
 
 ---
 
