@@ -142,7 +142,7 @@ No configuration needed. The plugin infers your GitHub username from the current
 ## Requirements
 
 - Claude Code CLI
-- GitHub CLI (`gh`) authenticated with your account
+- [GitHub CLI (`gh`)](https://cli.github.com/) — install via `brew install gh` (macOS), `winget install GitHub.cli` (Windows), or [see all options](https://github.com/cli/cli#installation). Then authenticate with `gh auth login`.
 - A GitHub profile repo (`<your-username>/<your-username>`) with a `README.md`
 
 ---
